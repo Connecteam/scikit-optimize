@@ -210,7 +210,8 @@ def gaussian_pi(X, model, y_opt=0.0, xi=0.01, return_grad=False):
                          .format(mu.ndim, std.ndim))
 
     values = np.zeros_like(mu)
-    mask = std > 0
+    # mask = std > 0
+    mask = np.abs((y_opt - xi - mu) / std) < 35.0
     improve = y_opt - xi - mu[mask]
     scaled = improve / std[mask]
     values[mask] = norm.cdf(scaled)
@@ -293,7 +294,8 @@ def gaussian_ei(X, model, y_opt=0.0, xi=0.01, return_grad=False):
                          .format(mu.ndim, std.ndim))
 
     values = np.zeros_like(mu)
-    mask = std > 0
+    # mask = std > 0
+    mask = np.abs((y_opt - xi - mu) / std) < 35.0
     improve = y_opt - xi - mu[mask]
     scaled = improve / std[mask]
     cdf = norm.cdf(scaled)
